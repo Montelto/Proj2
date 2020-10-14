@@ -3,7 +3,7 @@
 int main() {
     printf("1");
 
-    pthread_t  read_thread_id, munch1_thread_id, munch2_thread_id,
+    pthread_t read_thread_id, munch1_thread_id, munch2_thread_id,
     write_thread_id;
 
     Queue *rm = CreateStringQueue(10);
@@ -35,7 +35,7 @@ int main() {
                    (void *)&mw);
     printf("e");
 
-    //pthread_join(read_thread_id, NULL);
+    pthread_join(read_thread_id, NULL);
     pthread_join(munch1_thread_id, NULL);
     pthread_join(munch2_thread_id, NULL);
     pthread_join(write_thread_id, NULL);
