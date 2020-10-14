@@ -4,7 +4,7 @@
 
 #include "threads.h"
 
-void Reader(Queue *out)
+void *Reader(void *out)
 {
     // Unsure how to check line size and skip line as well as read whole line.
     char *line = NULL;
@@ -16,10 +16,12 @@ void Reader(Queue *out)
     if (lineSize <= bufferSize) {
         EnqueueString(out, line);
     }
+    pthread_exit((void *) out);
 }
 
-void Munch1(Queue *q[])
+void *Munch1(void *p)
 {
+    Queue *q[2] = {&p[0], &p[1]};
     const char space = ' ';
     const char asterisk = '*';
     char *line;
@@ -35,10 +37,12 @@ void Munch1(Queue *q[])
     }
 
     EnqueueString(q[1], line);
+    pthread_exit((void *) p);
 }
 
-void Munch2(Queue *q[])
+void *Munch2(void *p)
 {
+    Queue *q[2] = {&p[0], &p[1]};
     const int asciiDiff = 32;
     const int a = 97;
     const int z = 122;
@@ -55,9 +59,10 @@ void Munch2(Queue *q[])
     }
 
     EnqueueString(q[1], line);
+    pthread_exit((void *) p);
 }
 
-void Writer(Queue *in)
+void *Writer(void *in)
 {
     char *line;
     line = DequeueString(in);
@@ -73,4 +78,5 @@ void Writer(Queue *in)
 
     printf("%c", newLine);
     free(line);
+    pthread_exit((void *) in);
 }

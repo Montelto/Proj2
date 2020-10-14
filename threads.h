@@ -18,18 +18,18 @@ static char newLine = '\n';
 // receives a Queue of char* that Reader reads a line of input from standard
 // input
 // into, this Queue will be used by Munch1
-void Reader(Queue *out);
+void *Reader(void *out);
 
 // Receives a Queue of char* changes ' ' to '*' and writes to a Queue for
 // use by Munch2
-void Munch1(Queue *q[]);
+void *Munch1(void *p);
 
 // Receives a Queue of char*, changes lower case letters to uppercase and
 // writes to a Queue for use by Writer
-void Munch2(Queue *q[]);
+void *Munch2(void *p);
 
 // Receives a Queue of char*, of mutated strings then writes the strings
-void Writer(Queue *in);
+void *Writer(void *in);
 
 
 
