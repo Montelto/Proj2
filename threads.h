@@ -6,6 +6,7 @@
 #define PROJ2_THREADS_H
 
 #include "queue.h"
+#include <pthread.h>
 #include <endian.h>
 #include <string.h>
 #include <errno.h>
@@ -21,11 +22,11 @@ void Reader(Queue *out);
 
 // Receives a Queue of char* changes ' ' to '*' and writes to a Queue for
 // use by Munch2
-void Munch1(Queue *in, Queue *out);
+void Munch1(Queue *q[]);
 
 // Receives a Queue of char*, changes lower case letters to uppercase and
 // writes to a Queue for use by Writer
-void Munch2(Queue *in, Queue *out);
+void Munch2(Queue *q[]);
 
 // Receives a Queue of char*, of mutated strings then writes the strings
 void Writer(Queue *in);

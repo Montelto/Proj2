@@ -30,8 +30,8 @@ typedef struct
 
     int enqueueCount;
     int dequeueCount;
-    time_t enqueueTime;
-    time_t dequeueTime;
+    __clock_t enqueueTime;
+    __clock_t dequeueTime;
 } Queue;
 
 Queue *CreateStringQueue(int size);

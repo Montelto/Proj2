@@ -22,7 +22,7 @@ Queue *CreateStringQueue(int size)
 void EnqueueString(Queue *q, char *string)
 {
     pthread_mutex_lock(q->lock);
-    time_t start = time(NULL);
+    clock_t start = clock();
 
     while (q->size == q->maxSize)
     {
@@ -46,7 +46,7 @@ void EnqueueString(Queue *q, char *string)
     q->size += 1;
     q->enqueueCount += 1;
 
-    q->enqueueTime = time(NULL) - start;
+    q->enqueueTime = clock() - start;
     pthread_cond_signal(q->empty);
     pthread_mutex_unlock(q->lock);
 }
@@ -81,8 +81,8 @@ void PrintQueueStats(Queue *q)
 {
     printf("Enqueue Count: %d\n", q->enqueueCount);
     printf("Dequeue Count: %d\n", q->dequeueCount);
-    printf("Enqueue Time: %ld\n", q->enqueueTime);
-    printf("Dequeue Time: %ld\n", q->dequeueTime);
+    printf("Enqueue Time: %f\n", q->enqueueTime);
+    printf("Dequeue Time: %f\n", q->dequeueTime);
 }
 
 

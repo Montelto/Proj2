@@ -10,19 +10,20 @@ void Reader(Queue *out)
     char *line = NULL;
     size_t len = 0;
     ssize_t lineSize = 0;
-    
-    lineSize = getline(&line, &len, stdin);
 
-    printf("\n%s\n%zu\n", line, lineSize - 1);
-    free(line);
+    lineSize = getline(&line, &len, stdin);
+    printf("%s",line);
+    if (lineSize <= bufferSize) {
+        EnqueueString(out, line);
+    }
 }
 
-void Munch1(Queue *in, Queue *out)
+void Munch1(Queue *q[])
 {
     const char space = ' ';
     const char asterisk = '*';
     char *line;
-    line = DequeueString(in);
+    line = DequeueString(q[0]);
 
     // reads "line" char by char detecting for spaces and end of line
     for (int i = 0; i < bufferSize; i++)
@@ -33,16 +34,16 @@ void Munch1(Queue *in, Queue *out)
             *(line + i) = asterisk;
     }
 
-    EnqueueString(out, line);
+    EnqueueString(q[1], line);
 }
 
-void Munch2(Queue *in, Queue *out)
+void Munch2(Queue *q[])
 {
     const int asciiDiff = 32;
     const int a = 97;
     const int z = 122;
     char *line;
-    line = DequeueString(in);
+    line = DequeueString(q[0]);
 
     // reads "line" char by char detecting for lowercase and end of line
     for (int i = 0; i < bufferSize; i++)
@@ -53,7 +54,7 @@ void Munch2(Queue *in, Queue *out)
             *(line + i) = (char)(*(line + i) - asciiDiff);
     }
 
-    EnqueueString(out, line);
+    EnqueueString(q[1], line);
 }
 
 void Writer(Queue *in)
